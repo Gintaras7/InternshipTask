@@ -58,9 +58,13 @@ function importCommand($container) {
 // does validation. If validation fails, then user must enter new value, until is valid
 // $title - field name
 // $validationType - what type of data is expected
-function inputChecker($title, $validationType) {   
+// $input - by default empty. If not empty, user write some text in console
+function inputChecker($title, $validationType, $input = "") {   
     $format = " ".$title.": ";
-    $input = readline($format);
+
+    if($input == "")
+        $input = readline($format);
+
     while(true) {
         if($validationType == "EMAIL")
         {
@@ -89,9 +93,11 @@ function inputChecker($title, $validationType) {
 // Returns new validated value if entered something
 function editPart($title, $input, $validationType = "NONE") {
     echo "current ".$title.": ".$input.PHP_EOL;
-    $doChange = readline("enter new value (press ENTER if you dont want to change field): ");
-    if(!empty($doChange))
-        $input = inputChecker($title, $validationType);
+    $in = readline("enter new value (press ENTER if you dont want to change field): ");
+
+    // if not empty, then trying to validate input data
+    if(!empty($in))
+        $input = inputChecker($title, $validationType, $in);
 
     return $input;
 }
