@@ -7,7 +7,7 @@ require("cli_functions.php");
 // prints customers in console
 // $clients - array of customers
 function viewCustomers($clients) {
-    if(count($clients) > 0)
+    if(@count($clients) > 0)
     {
         foreach ($clients as $cl)
             echo $cl.PHP_EOL;
