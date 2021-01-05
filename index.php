@@ -1,16 +1,16 @@
 <?php
-include("Customer.php");
-include("CustomerContainer.php");
+require("Customer.php");
+require("CustomerContainer.php");
+require("cli_functions.php");
 
 
-function viewClients($clients) {
-
+// prints customers in console
+// $clients - array of customers
+function viewCustomers($clients) {
     if(count($clients) > 0)
     {
-        foreach ($clients as $cl) {
-            echo $cl;
-            echo PHP_EOL;
-        }
+        foreach ($clients as $cl)
+            echo $cl.PHP_EOL;
     }
     else 
     {
@@ -18,105 +18,32 @@ function viewClients($clients) {
     }
 }
 
-function inputChecker($title, $validationType) {
-    $input = readline($title);
-    while(true) {
-        if($validationType == "EMAIL")
-        {
-            if(filter_var($input, FILTER_VALIDATE_EMAIL))
-                break;
-        }
-        elseif($validationType == "PHONE")
-        {
-            if (preg_match("/^[0-9]{9,14}\$/", $input))
-                break;
-        }
-        else {
-            if(strlen($input) > 0)
-                break;
-        }
-   
-        echo "Validation failed. Try again".PHP_EOL;
-        $input = readline($title);        
-    }
-    return $input;
-}
-
-
-//$c2 = new Customer(2,"John","aa@gg.lt", "+37085555", "2012-10-10");
-//$c1 = new Customer(55,"Johns","asa@gg.lt", "+370s85555", "2012-10-10");
-
 $container = new CustomerContainer();
+$run = true;
 
-
-// list +
-// delete +
-// add +
-// edit -
-// validate -
-// import +
-
-while(true) {
-    $command = readline("Enter command: ");
+// commands in each case can be found in file "cli_functions.php"
+while($run) {
+    $command = readline("Enter new command: ");
     switch ($command) {
         case "list":
-            echo "List ".PHP_EOL;
-            viewClients($container->getCustomers());
+            viewCustomers($container->getCustomers());
             break;
         case "delete":
-            $id = readline("Enter client ID to delete, please: ");
-            if(is_numeric($id)) {
-                if($container->delete($id))
-                    echo "Deleted ! ";
-                else
-                    echo "Could not delete ! ";
-            }
-            else
-                echo "ID must be integer";
+            deleteCommand($container);
           break;
-/*        case "edit":
-            $id = readline("Write client ID to edit, please: ");
-            if(is_numeric($id)) {
-                if(array_key_exists($id, $customers)) {
-                    $name = $customers[$id]->getName();
-                    echo "current name: ".$name.PHP_EOL;
-                    $doChange = readline("enter new: ");
-                    echo $doChange;
-                    if(!empty($doChange))
-                        $name = inputChecker(" name: ", "NONE");
-
-                    $doChange = readline("email: ");
-                        if($doChange == 1)
-                            $email = inputChecker(" email: ", "EMAIL");
-//                    $phone = inputChecker(" phone: ", "PHONE");          
-//                    $datetime = inputChecker(" datetime: ", "DATETIME");          
-                }
-            }
-            else
-                echo "ID must be integer";            
+        case "edit":
+            editCommand($container);
             break;
-*/
         case "add":
-
- 
-          echo "Add new client".PHP_EOL;
-          $id = rand(0,6000);
-          $name = inputChecker(" name: ", "NONE");
-          $email = inputChecker(" email: ", "EMAIL");
-          $phone = inputChecker(" phone: ", "PHONE");          
-          $datetime = inputChecker(" datetime: ", "NONE");          
-          $container->insert(new Customer($id, $name, $email, $phone, $datetime));
-          echo "Successfuly executed !";
+            addCommand($container);
           break;
-
         case "import":
-            $container->importFromCSV("Visitors.csv");
+            importCommand($container);
             break;
         default:
-          echo "Command does not exists ! add|delete|edit|import";
+          echo "Command does not exists ! Possible commands: add | delete | edit | import | list ";
       }
       echo PHP_EOL;
 }
-
 
 ?>

@@ -1,4 +1,4 @@
 ﻿ID,Name,Email,Phone,Datetime
-1,John,john@abc.lt,37061234567,11/10/2020 14:15
-2,Anthony,anthony@abc.lt,37061111111,11/10/2020 14:10
-3,Martin,martin@abc.lt,37062222222,11/10/2020 13:25
+1,John,john@abc.lt,+37061234567,2020-10-10 20:12
+2,Anthony,anthony@abc.lt,+37061111111,2020-10-10 20:10
+3,Martin,martin@abc.lt,+37062222222,2020-10-11 10:12

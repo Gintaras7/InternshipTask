@@ -1,5 +1,6 @@
 <?php
 
+// class for mananging Customer data
 class Customer {
   private $id;
   private $name;
@@ -31,8 +32,8 @@ class Customer {
     return $this->phone;
   }
 
-  public function getDatetime(){
-    return $this->datetime;
+  public function getDateTime(){
+    return $this->dateTime;
   }
 
   public function setName($name) {
